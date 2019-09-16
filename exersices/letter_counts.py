@@ -11,7 +11,7 @@ def letter_freq(txt):
     return result
 
 
-letter_freq('rottatuolille')
+letter_freq('BiggerAndLower')
 
 
 if __name__ == '__main__':
