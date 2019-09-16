@@ -1,34 +1,37 @@
-from random import randint as a
+from random import randint as rand
 
 __author__ = 'Sindre Tallaksrud'
 __email__ = 'sindrtal@nmbu.no'
 
 
-def b():
-    c = 0
-    while c < 1:
-        c = int(input('Your guess: '))
-    return c
+def bigger_than_0():
+    guess = 0
+    while guess < 2:
+        guess = int(input('Your guess: '))
+    return guess
 
-def d():
-    return a(1, 6) + a(1, 6)
 
-def e(f, g):
-    return f == g
+def throw_dices():
+    return rand(1, 6) + rand(1, 6)
+
+
+def test(your_dices, your_guess):
+    return your_dices == your_guess
+
 
 if __name__ == '__main__':
 
-    h = False
-    i = 3
-    j = d()
-    while not h and i > 0:
-        k = b()
-        h = e(j, k)
-        if not h:
+    untrue = False
+    max = 3
+    dices = throw_dices()
+    while not untrue and max > 0:
+        k = bigger_than_0()
+        untrue = test(dices, k)
+        if not untrue:
             print('Wrong, try again!')
-            i -= 1
+            max -= 1
 
-    if i > 0:
-        print('You won {} points.'.format(i))
+    if max > 0:
+        print('You won {} points.'.format(max))
     else:
-        print('You lost. Correct answer: {}.'.format(j))
+        print('You lost. Correct answer: {}.'.format(dices))
