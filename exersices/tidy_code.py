@@ -22,16 +22,16 @@ def test(your_dices, your_guess):
 if __name__ == '__main__':
 
     untrue = False
-    max = 3
+    maximum = 3
     dices = throw_dices()
-    while not untrue and max > 0:
+    while not untrue and maximum > 0:
         k = bigger_than_0()
         untrue = test(dices, k)
         if not untrue:
             print('Wrong, try again!')
-            max -= 1
+            maximum -= 1
 
-    if max > 0:
-        print('You won {} points.'.format(max))
+    if maximum > 0:
+        print('You won {} points.'.format(maximum))
     else:
         print('You lost. Correct answer: {}.'.format(dices))
