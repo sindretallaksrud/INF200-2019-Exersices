@@ -1,13 +1,19 @@
 def letter_freq(txt):
     liten = txt.lower()
     alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
-                'v', 'w', 'x', 'y', 'z',' ','.',',','?','!']
-
-    for i in range(0,31):
+             'v', 'w', 'x', 'y', 'z', ' ', '.', ',', '?', '!']
+    result = {}
+    for i in range(0, 31):
         if liten.count(alpha[i]) != 0:
-           print(liten.count(alpha[i]),alpha[i])
+            result[alpha[i]] = liten.count(alpha[i])
+    print(result)
+
+    return result
+
 
 letter_freq('rottatuolille')
+
+
 if __name__ == '__main__':
     text = input('Please enter text to analyse: ')
 
