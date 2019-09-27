@@ -17,7 +17,8 @@ def letter_freq(txt):
 
 def entropy(message):
     """
-    n_i is number of occurences of letter i (i is the UT F -8 code for the letter)
+    n_i is number of occurences of letter i
+    (i is the UT F -8 code for the letter)
     n is number of letters in message
     p_i is frequency of the letter in the message
     """
