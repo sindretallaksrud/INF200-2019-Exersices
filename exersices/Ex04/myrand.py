@@ -19,15 +19,16 @@ class LCGRand:
         self.count += 1
         return self.r[self.count]
 
-s = LCGRand(346)
-print(s.rand())
-
-
-#r[n+1] = a * r[n] mod m
 
 class ListRand:
-    def __init__(self):
-        pass
+    def __init__(self, my_list):
+        self.my_list = my_list
+        self.n = -1
 
     def rand(self):
-        pass
+        self.n += 1
+        if self.n >= len(self.my_list):
+            raise RuntimeError('when n is bigger than the length of my_list')
+        else:
+            number = self.my_list[self.n]
+            return number
