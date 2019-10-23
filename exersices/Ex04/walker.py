@@ -27,24 +27,27 @@ class Walker:
         if not self.init_pos == self.home_pos:
             return False
         else:
-            return self.home_pos
+            return True
 
     def get_position(self):
         """The students current position"""
         return self.init_pos
 
     def get_steps(self):
-        return self.steps
         """The number of steps the student has taken in total"""
+        return self.steps
 
 
 if __name__ == "__main__":
     distance = [1, 2, 5, 10, 20, 50, 100]
     for i in distance:
+        """7 different distances"""
         my_list = []
+        """Empty list refills for each time in for-loop"""
         for _ in range(5):
             k = Walker(0, i)
-            while not k.init_pos == k.home_pos:
+            while not k.is_at_home():
+                """Moves if not at home"""
                 k.move()
             my_list.append(k.get_steps())
         print('Distance:   {0} -> Path lengths: {1}'.format(i, my_list))

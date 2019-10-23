@@ -31,5 +31,4 @@ class ListRand:
             raise RuntimeError('when n is bigger than the length of my_list')
         else:
             number = self.my_list[self.n]
-            return number
-
+        return number
