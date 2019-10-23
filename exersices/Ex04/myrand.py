@@ -32,3 +32,4 @@ class ListRand:
         else:
             number = self.my_list[self.n]
             return number
+
