@@ -14,8 +14,6 @@ def sigmoid(z):
     """Perform a logistic transform on the input.
     This function applies the sigmoidal function element-wise to all
     elements of `z`. The sigmoidal function is on the following form:
-    .. math::
-        \frac{1}{1 + exp(-\mathbf{z})}.
     Parameters
     ----------
     z : np.ndarray
@@ -25,8 +23,7 @@ def sigmoid(z):
     sigmoidal_transformed_z : np.ndarray
         Transformed input.
     """
-    # Your code here
-    pass
+    return 1/(1+np.exp(-z))
 
 
 def predict_proba(coef, X):
@@ -50,22 +47,12 @@ def predict_proba(coef, X):
     p : np.ndarray(shape(n,))
         The predicted class probabilities.
     """
-    # Your code here
-    pass
+    y_hat = sigmoid(X@coef)
+    return y_hat
 
 
 def logistic_gradient(coef, X, y):
-    r"""Returns the gradient of a logistic regression model.
-    The gradient is given by
-    .. math::
-        \nabla_w L(\mathbf{w}; X, \mathbf{y}) = \sum_i \mathbf{x}_i (y_i - \hat{y}_i),
-    or, elementwise,
-    .. math::
-        \left[\nabla_w L(\mathbf{w}; X, \mathbf{y})\right]_j = \frac{\partial L}{\partial w_j}
-                                                             = \sum_i X_{ij} (y_i - \hat{y}_i),
-    where :math:`\hat{y}_i` is the predicted value for data point
-    :math:`i` and is given by :math:`\sigma(x_i^Tw)`, where
-    :math:`\sigma(z)` is the sigmoidal function.
+    """Returns the gradient of a logistic regression model.
     Parameters
     ----------
     coef : np.ndarray(shape=(r,))
@@ -80,8 +67,8 @@ def logistic_gradient(coef, X, y):
         The gradient of the cross entropy loss related to the linear
         logistic regression model.
     """
-    # Your code here
-    pass
+    y_en = predict_proba(coef, X)
+    return -(y - y_en)@X
 
 
 class LogisticRegression(BaseEstimator, ClassifierMixin):
@@ -132,21 +119,20 @@ class LogisticRegression(BaseEstimator, ClassifierMixin):
         learning_rate : float (default=0.01)
             The step-size for the gradient descent updates.
         random_state : np.random.random_state or int or None (default=None)
-            A numpy random state object or a seed for a numpy random state object.
+            A numpy random state object or a seed for a numpy random state
+            object.
         """
-        # Your code here
-        pass
+
+        self.max_iter = max_iter
+        self.tol = tol
+        self.learning_rate = learning_rate
+        self.random_state = random_state
 
     def _has_converged(self, coef, X, y):
-        r"""Whether the gradient descent algorithm has converged.
+        """Whether the gradient descent algorithm has converged.
         Returns True if the norm of the gradient is smaller than ``self.tol``,
-        mathematically, that is
-        .. math::
-            ||\nabla_w L(\mathbf{w}^{(k)}; X, \mathbf{y})|| < T
-        where :math:`\nabla_w L` is the gradient of the loss function,
-        :math:`|| \mathbf{v} ||` is the norm of the vector :math:`\mathbf{v}`,
-        :math:`\mathbf{w}^{(k)}` is the weights at iteration ``k``, and
-        :math:`T` is the convergence tolerance (``self.tol``).
+        mathematically.
+
         Parameters
         ----------
         coef : np.ndarray(shape=(r,))
@@ -160,23 +146,13 @@ class LogisticRegression(BaseEstimator, ClassifierMixin):
         has_converged : bool
             True if the convergence criteria above is met, False otherwise.
         """
-        # Your code here
-        pass
+        return np.linalg.norm(logistic_gradient(coef, X, y)) < self.tol
 
     def _fit_gradient_descent(self, coef, X, y):
-        r"""Fit the logisitc regression model to the data given initial weights
+        """Fit the logisitc regression model to the data given initial weights
         Gradient descent works by iteratively applying the following update
         rule
-        .. math::
-            \mathbf{w}^{(k)} \gets \mathbf{w}^{(k-1)} - \eta \nabla L(\mathbf{w}^{(k-1)}; X, \mathbf{y}),
-        where :math:`\mathbf{w}^{(k)}` is the coefficient vector at iteration
-        ``k``, :math:`\mathbf{w}^{(k-1)}` is the coefficient vector at
-        iteration k-1, :math:`\eta` is the learning rate and
-        :math:`\nabla L(\mathbf{w}^{(k-1)}; X, \mathbf{y})` is the gradient of
-        the loss function at iteration k-1.
-        The iterative algorithm should be performed for at most
-        ``self.max_iter`` iterations, or until the convergence criteria is
-        reached.
+
         Parameters
         ----------
         coef : np.ndarray(shape=(r,))
@@ -191,8 +167,14 @@ class LogisticRegression(BaseEstimator, ClassifierMixin):
         coef : np.ndarray(shape=(n,))
             The logistic regression weights
         """
-        # Your code here
-        pass
+        count = 0
+        while True:
+            coef -= self.learning_rate*logistic_gradient(coef, X, y)
+
+            if count >= self.max_iter:
+                return coef
+
+            count += 1
 
     def fit(self, X, y):
         """Fit a logistic regression model to the data.
@@ -276,7 +258,8 @@ if __name__ == "__main__":
     y = predict_proba(coef, X) > 0.5
 
     # Fit a logistic regression model to the X and y vector
-    # Fill in your code here.
+    lr_model = LogisticRegression()
+    lr_model.fit(X, y)
     # Create a logistic regression object and fit it to the dataset
 
     # Print performance information
